@@ -1,0 +1,146 @@
+# SQL-HW
+
+
+Вывести (сделать выборку) всех сотрудников с именем Robert.
+
+select * from Employees
+  where FirstName = 'Robert'
+
+Вывести (выбрать) наименования продуктов с кодами 1, 3, 7, 9 и цену, уменьшенную на 50%.
+
+select ProductID,   price /0*2 as sale, price
+	from Products
+		where ProductID in (1,3,7,9)
+
+
+Написать запрос по w3schools.com.
+Вывести (выбрать) все заказы сотрудника с номером 5 или заказы клиента с кодом больше 88 и кодом грузоотправителя
+
+select* from Orders
+ where EmployeeID=5 OR CustomerID>88 AND ShipperID=1
+
+Написать запрос по w3schools.com
+Вывести все продукты,
+ у которых код продукта >= 64 или продукты,
+ у которых поставщик = "Tokyo Traders" (подзапрос).
+ (Result: Number of Records: 16. Если у вас получается No result - запрос составлен неверно)
+
+SELECT * FROM Products
+  where ProductID>=64 or SupplierID=(SELECT SupplierID FROM Suppliers
+    where SupplierName= 'Tokyo Traders')
+
+
+
+
+Сколько уникальных сотрудников задействовано в таблице "Orders"?  1.3.5.9
+
+
+SELECT 	 distinct EmployeeID 
+  FROM Orders
+
+(9)
+
+
+Написать запрос по w3schools.com
+
+Вывести (выбрать) заказы, закрепленные за сотрудником, в виде: OrderID, LastName, FirstName.
+
+(Result: Number of Records: 196. Если у вас получается No result - запрос составлен неверно)
+
+SELECT  OrderId, LastName, FirstName  
+ FROM Employees as e
+  join Orders on e.EmployeeID = Orders.EmployeeID
+
+Написать запрос по w3schools.com
+Вывести (выбрать) всю информацию о сотрудниках, у которых нет ни одного заказа (используйте один из видов join для решения).
+(Result: Number of Records: 1. Если у вас получается No result - запрос составлен неверно). 
+
+SELECT Employees.EmployeeID, OrderID
+ FROM Employees
+  left join Orders on Employees.EmployeeID = Orders.EmployeeID
+   where OrderID is NULL
+
+Написать запрос по w3schools.com
+У нас есть две таблицы: Shippers и Suppliers, их необходимо объединить,
+ чтобы сделать общую таблицу, состоящую из двух колонок (в первой колонке - имя таблицы, с которой взята запись, 
+во второй колонке -название ShipperName или SupplierName.
+(Result: Number of Records: 32. Если у вас получается No result - запрос составлен неверно).
+
+SELECT 'suppliers'as tablename, supplierName FROM Suppliers
+ union 
+  select ' shippers' as tablename,ShipperName FROM Shippers
+
+Написать запрос по w3schools.com
+Вывести (выбрать) максимальный номер заказа сотрудника Buchanan Steven.
+(Result: Number of Records: 1. Если у вас получается No result - запрос составлен неверно)
+
+SELECT MAX(OrderID) 
+ FROM Orders o
+  join Employees E
+   on o.EmployeeID=E.EmployeeID  
+    where  LastName = 'Buchanan'and FirstName= 'Steven'
+
+
+ Написать запрос по w3schools.com
+Вывести (выбрать) товары, цены которых больше средней цены по всем продуктам.
+(Result: Number of Records: 25. Если у вас получается No result - запрос составлен неверно)
+
+
+SELECT * 
+ FROM Products
+  where price > (SELECT  avg (price)FROM Products)
+   order by price
+Написать запрос по w3schools.com
+
+
+Посчитать и вывести для каждого заказа его итоговую стоимость при помощи цены и количества для каждого товара. 
+(Result: Number of Records: 196. Если у вас получается No result - запрос составлен неверно)
+ 
+SELECT OrderID, P.ProductID,Quantity,Price, SUM(Quantity*Price) as colum 
+	FROM OrderDetails
+		Join Products as P
+        	ON	OrderDetails.ProductID = P.ProductID
+
+
+Написать запрос по w3schools.com
+Создать пользователя в таблице Employees с номером 11.
+
+insert into Employees  (EmployeeID)
+values (11)
+
+Написать запрос по w3schools.com
+Изменить (обновить) значение в колонке EmployeeID на 11 для CustomerID in (89, 90).
+(Result: Number of Records: 3. Если у вас получается No result - запрос составлен неверно)
+
+UPDATE Orders
+	SET EmployeeID = 11
+		where 	CustomerID in (89,90)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
